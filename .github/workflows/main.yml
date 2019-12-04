@@ -38,9 +38,9 @@ jobs:
         azcliversion: 2.0.75
         inlineScript: |
           az extension add --name spring-cloud
-          az configure --defaults group=CLUSTER_RG
-          az configure --defaults spring-cloud=CLUSTER_NAME
-          az spring-cloud config-server git set -n CLUSTER_NAME --uri CONFIGSERVER_URL --label config
+          az configure --defaults group=yuchensp
+          az configure --defaults spring-cloud=yuchensp
+          az spring-cloud config-server git set -n yuchensp --uri CONFIGSERVER_URL --label config
           az spring-cloud app create --name gateway --is-public true
           az spring-cloud app create --name auth-service
           az spring-cloud app create --name account-service

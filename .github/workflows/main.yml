@@ -2,6 +2,7 @@ on: [push]
 
 name: AzureSpringCloud
 
+# env not working for Azure CLI
 env:
   CLUSTER_NAME: yuchensp
   CLUSTER_RG: ycuhensp
@@ -40,10 +41,10 @@ jobs:
           az extension add --name spring-cloud
           az configure --defaults group=yuchensp
           az configure --defaults spring-cloud=yuchensp
-          az spring-cloud config-server git set -n yuchensp --uri CONFIGSERVER_URL --label config
+          az spring-cloud config-server git set -n yuchensp --uri https://github.com/yucwan/piggymetrics --label config
           az spring-cloud app create --name gateway --is-public true
           az spring-cloud app create --name auth-service
           az spring-cloud app create --name account-service
-          az spring-cloud app deploy -n gateway --jar-path ${{ github.workspace }}/gateway/target/gateway.jar
-          az spring-cloud app deploy -n account-service --jar-path ${{ github.workspace }}/account-service/target/account-service.jar
-          az spring-cloud app deploy -n auth-service --jar-path ${{ github.workspace }}/auth-service/target/auth-service.jar
+          az spring-cloud app deploy -n gateway --jar-path $GITHUB_WORKSPACE/gateway/target/gateway.jar
+          az spring-cloud app deploy -n account-service --jar-path $GITHUB_WORKSPACE/account-service/target/account-service.jar
+          az spring-cloud app deploy -n auth-service --jar-path $GITHUB_WORKSPACE/auth-service/target/auth-service.jar

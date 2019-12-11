@@ -21,11 +21,13 @@ jobs:
       run: |
         mvn clean package -D skipTests
     
+    # Auth with AAD
     - name: Azure Login
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     
+    # Az cli commands
     - name: Azure CLI script
       uses: azure/CLI@v1
       with:

@@ -27,17 +27,6 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     
-    # Az cli commands
-    - name: Azure CLI script
-      uses: azure/CLI@v1
-      with:
-        azcliversion: 2.0.75
-        inlineScript: |
-          az extension add --name spring-cloud
-          az configure --defaults group=yuchensp
-          az configure --defaults spring-cloud=yuchensp
-          az spring-cloud config-server git set -n yuchensp --uri https://github.com/yucwan/piggymetrics --label config
-          az spring-cloud app deploy -n gateway --jar-path $GITHUB_WORKSPACE/gateway/target/gateway.jar
-          az spring-cloud app deploy -n account-service --jar-path $GITHUB_WORKSPACE/account-service/target/account-service.jar
-          az spring-cloud app deploy -n auth-service --jar-path $GITHUB_WORKSPACE/auth-service/target/auth-service.jar
-          az spring-cloud app update -n gateway --is-public true
+    - name: AZ CLI commands
+      run: az spring-cloud app update -n gateway --is-public false
+    

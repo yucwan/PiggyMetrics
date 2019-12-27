@@ -2,6 +2,10 @@ on: [push]
 
 name: AzureSpringCloud
 
+env:
+  GROUP: yuchensp
+  SERVICE_NAME: yuchensp
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -26,9 +30,16 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
     - name: Install ASC az extension
       run: az extension add --name spring-cloud
    
     - name: AZ CLI commands
-      run: az spring-cloud app update -n gateway --is-public false -g yuchensp -s yuchensp
+      run: |
+        az configure --defaults group=$GROUP
+        az configure --defaults spring-cloud=SERVICE_NAME
+        az spring-cloud app deploy -n gateway --jar-path ${{ github.workspace }}/gateway/target/gateway.jar
+    # az spring-cloud app deploy -n account-service --jar-path ${{ github.workspace }}/account-service/target/account-service.jar
+    # az spring-cloud app deploy -n auth-service --jar-path ${{ github.workspace }}/auth-service/target/auth-service.jar
+    # az spring-cloud app update -n gateway --is-public true
     

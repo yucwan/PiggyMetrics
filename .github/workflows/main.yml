@@ -1,6 +1,5 @@
-on: [push]
-
 name: AzureSpringCloud
+on: push
 
 env:
   GROUP: yuchensp
